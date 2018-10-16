@@ -39,11 +39,7 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession sessao = request.getSession();
-        if (sessao.getAttribute("logado") != null && sessao.getAttribute("logado").equals(true)) {
-            response.sendRedirect("ChatPrincipal");
-        }
-
+       
         Cookie[] cookie = request.getCookies();
 
         String errologin = null;
