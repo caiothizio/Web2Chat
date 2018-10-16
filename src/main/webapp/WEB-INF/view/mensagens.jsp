@@ -19,18 +19,13 @@
     <body>
 
         <div id="messages">
-            <c:forEach var="msg" items="${listajson}">
+            <c:forEach var="msg" items="${messages}">
                 <p>[<c:out value="${msg.date}"/>] <c:out value="${msg.from}"/> diz: <c:out value="${msg.message}"/></p>
             </c:forEach>
         </div>
 
-        <%-- USANDO JSTL --%>
-
-        <%--c:forEach items="${lista}" var="msgobject">
-            <p>[${msgobject.date}] ${msgobject.from} ${msgs["said"]} ${msgobject.message}</p>
-        </c:forEach--%>
         <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
-        <script src="js/mensagens.js" type="text/javascript"></script>
+        <!--<script src="js/mensagens.js" type="text/javascript"></script>-->
     </body>
 
 </html>

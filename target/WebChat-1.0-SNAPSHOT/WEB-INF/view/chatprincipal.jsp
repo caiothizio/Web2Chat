@@ -47,7 +47,7 @@
                     </c:choose>
                     
                        
-                    <iframe src = "Mensagem?from=${param.from}&to=${param.to}" height = "425" width = "725"></iframe>
+                    <iframe src = "Mensagem?user1=${param.from}&user2=${param.to}" height = "425" width = "725"></iframe>
                     
                  
                     <form action = "Mensagem" method = "POST">

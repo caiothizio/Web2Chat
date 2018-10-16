@@ -28,11 +28,11 @@ function addUser() {
         statusCode: {
             201: function(){
                 
-                window.location = "http://localhost:8080/MavenWeb/Login";
+                window.location = "http://localhost:8080/ChatWeb/Login";
             },
             400: function(){
                 
-                window.location = "http://localhost:8080/MavenWeb/Usuario";
+                window.location = "http://localhost:8080/ChatWeb/Usuario";
             }
         }
     });

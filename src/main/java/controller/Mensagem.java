@@ -69,18 +69,17 @@ public class Mensagem extends HttpServlet {
         List <MsgObject> lista = null;
        
         try {
-            lista = Banco.buscaMensagens(request.getParameter("user1"), request.getParameter("user2"));
+            lista = Banco.buscaMensagens(request.getParameter("user1"), request.getParameter("user2"));       
         } catch (SQLException ex) {
             Logger.getLogger(Mensagem.class.getName()).log(Level.SEVERE, null, ex);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-
-        JsonElement json = (new Gson()).toJsonTree(lista);
-        JsonArray listaJson = json.getAsJsonArray();
+      
+        //JsonElement json = (new Gson()).toJsonTree(lista);
+        //System.out.println(json);
+        //JsonArray listaJson = json.getAsJsonArray();
         
-        request.setAttribute("listajson", listaJson);
-        
-        
+        request.setAttribute("messages", lista);
         
         response.setStatus(HttpServletResponse.SC_OK);
         request.getRequestDispatcher("/WEB-INF/view/mensagens.jsp").forward(request, response);
