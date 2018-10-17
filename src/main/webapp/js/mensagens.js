@@ -35,12 +35,11 @@ function getMessages(user1, user2){
         type: 'GET',
         data:{user1, user2},
         statusCode:{
-            200: function(messagesw){
-                
-                alert('sucesso\n\n');
+            200: function(messages){
+               
             },
             400: function(){
-                alert('erro');
+                
             }
         }
     });

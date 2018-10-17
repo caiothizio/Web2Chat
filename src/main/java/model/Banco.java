@@ -121,7 +121,7 @@ public class Banco {
         if (user1 == null || user2 == null) {
             return null;
         }
-
+  
         String sql = "select * from public.\"mensagem\" where (remetente = ? or remetente = ?) and (destinatario = ? or destinatario = ?) order by data asc";
         Connection con = Conexao.getConnection();
         PreparedStatement st = con.prepareStatement(sql);
@@ -141,6 +141,8 @@ public class Banco {
                 msg.setFrom(rs.getString("remetente"));
                 msg.setMessage(rs.getString("texto"));
                 msg.setTo(rs.getString("destinatario"));
+                
+                //System.out.println(msg.getFrom()+"/"+msg.getTo()+"/"+msg.getMessage()+"/"+msg.getDate());
 
                 lista.add(msg);
             } while (rs.next());
