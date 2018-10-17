@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar jetty-runner-9.4.12.v20180830 --port 8080 target/*.war
+web: java $JAVA_OPTS -jar jetty/jetty-runner-9.3.17.RC0.jar --port $PORT target/WebChat-1.0-SNAPSHOT.war

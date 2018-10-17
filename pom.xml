@@ -29,36 +29,19 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>           
+            <version>9.1-901-1.jdbc4</version>
         </dependency>
-      
-    </dependencies>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-runner -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-runner</artifactId>
+            <version>9.3.17.RC0</version>
+            <scope>test</scope>
+        </dependency>
 
+    </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.eclipse.jetty</groupId>
-                                    <artifactId>jetty-runner</artifactId>
-                                    <version>9.4.9.v20180320</version>
-                                    <destFileName>jetty-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -104,8 +87,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
-            
         </plugins>
     </build>
 
