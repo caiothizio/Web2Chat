@@ -27,11 +27,11 @@ function addUser() {
         data: {emailUser: email, userUser: user, pwUser: pw, pwConf: pw_conf},
         statusCode: {
             201: function(){
-                
+                alert('success 201');
                 window.location.replace("Login");
             },
             400: function(){
-                
+                alert('erro 400');
                 window.location.reload();
             }
         }
