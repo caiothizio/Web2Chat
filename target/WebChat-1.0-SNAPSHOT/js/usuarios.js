@@ -28,11 +28,11 @@ function addUser() {
         statusCode: {
             201: function(){
                 
-                window.location = "http://localhost:8080/ChatWeb/Login";
+                window.location.replace("Login");
             },
             400: function(){
                 
-                window.location = "http://localhost:8080/ChatWeb/Usuario";
+                window.location.reload();
             }
         }
     });
