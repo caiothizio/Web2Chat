@@ -7,7 +7,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,8 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Banco;
-import model.CadObject;
+import model.BancoUser;
 import org.postgresql.util.PSQLException;
 
 /**
@@ -133,7 +131,7 @@ public class Usuario extends HttpServlet {
             //do nothing
         } else {
             try {
-                boolean cad = Banco.cadastrar(usuario, email, senha);
+                boolean cad = BancoUser.newUser(usuario, email, senha);
 
                 if (cad) {
                     cadastrou = true;
@@ -174,7 +172,7 @@ public class Usuario extends HttpServlet {
         
         System.out.println(user);
         try {
-            if(Banco.deleteAccount(user)){
+            if(BancoUser.deleteUser(user)){
                 HttpSession sessao = request.getSession();
                 sessao.invalidate();
                 //System.out.println("sucesso");

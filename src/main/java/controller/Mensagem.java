@@ -5,25 +5,19 @@
  */
 package controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Banco;
+import model.BancoMsg;
 import model.MsgObject;
 
 /**
@@ -69,7 +63,7 @@ public class Mensagem extends HttpServlet {
         List <MsgObject> lista = null;
        
         try {
-            lista = Banco.buscaMensagens(request.getParameter("user1"), request.getParameter("user2"));       
+            lista = BancoMsg.getMsgs(request.getParameter("user1"), request.getParameter("user2"));       
         } catch (SQLException ex) {
             Logger.getLogger(Mensagem.class.getName()).log(Level.SEVERE, null, ex);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -105,7 +99,7 @@ public class Mensagem extends HttpServlet {
         Timestamp time = new java.sql.Timestamp(date.getTime());
         	
         try{
-            Banco.escreveMensagem(from, msg, to, time);
+            BancoMsg.newMsg(from, msg, to, time);
         } catch (SQLException ex) {
             Logger.getLogger(Mensagem.class.getName()).log(Level.SEVERE, null, ex);
         }

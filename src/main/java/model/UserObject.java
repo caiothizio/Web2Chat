@@ -15,9 +15,8 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class CadObject {
-    @Id @GeneratedValue
-    private long id;
+public class UserObject {
+    private @Id @GeneratedValue Long id;
     private String usuario;
     private String email;
     private String senha;

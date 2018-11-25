@@ -32,18 +32,6 @@ public class Conexao {
     
     static{
         try {
-            /*
-            String usuario = "postgres";
-            String senha = "1602";
-            
-            Class.forName("org.postgresql.Driver");
-            String urlconexao = "jdbc:postgresql://localhost/Chat";
-
-            setConnection(DriverManager.getConnection(urlconexao, usuario, senha));
-            
-            getConnection().setAutoCommit(true);
-            */
-  
             source.setServerName(System.getenv("DATABASE_HOST"));
             source.setDatabaseName(System.getenv("DATABASE_NAME"));
             source.setUser(System.getenv("DATABASE_USER"));

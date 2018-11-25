@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Banco;
+import model.BancoUser;
 
 /**
  *
@@ -67,7 +67,7 @@ public class ChatPrincipal extends HttpServlet {
 
         try {
             
-            contatos = Banco.getContatos(user);
+            contatos = BancoUser.getAllUsers(user);
             request.setAttribute("user", user);
             request.setAttribute("contatos", contatos);
             processRequest(request, response);

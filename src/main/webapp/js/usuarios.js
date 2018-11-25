@@ -20,6 +20,8 @@ function addUser() {
     var user = document.getElementById("user").value;
     var pw = document.getElementById("senha").value;
     var pw_conf = document.getElementById("senha_conf").value;
+    
+    alert(email+user+pw+pw_conf);
 
     $.ajax({
         url: 'Usuario',
@@ -27,11 +29,9 @@ function addUser() {
         data: {emailUser: email, userUser: user, pwUser: pw, pwConf: pw_conf},
         statusCode: {
             201: function(){
-                alert('success 201');
                 window.location.replace("Login");
             },
             400: function(){
-                alert('erro 400');
                 window.location.reload();
             }
         }

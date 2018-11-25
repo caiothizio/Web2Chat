@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Banco;
-import model.LoginObject;
+import model.BancoUser;
 
 /**
  *
@@ -93,7 +91,7 @@ public class Login extends HttpServlet {
         String senha = request.getParameter("senha");
 
         try {
-            boolean log = Banco.login(usuario, senha);
+            boolean log = BancoUser.loginUser(usuario, senha);
 
             if (log) {
                 HttpSession sessao = request.getSession();
