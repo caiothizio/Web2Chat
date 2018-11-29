@@ -1,12 +1,13 @@
+model\BancoMsg.class
+model\ConexaoLocal.class
 filters\AuthFilter.class
 controller\Logout.class
 filters\I18nFilter.class
-model\CadObject.class
 controller\Usuario.class
 controller\Mensagem.class
-model\LoginObject.class
+model\UserObject.class
 controller\Login.class
-model\Banco.class
+model\BancoUser.class
 model\Conexao.class
 model\MsgObject.class
 controller\ChatPrincipal.class

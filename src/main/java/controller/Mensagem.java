@@ -5,6 +5,7 @@
  */
 package controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -51,33 +52,29 @@ public class Mensagem extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //MemcachedClient client = new MemcachedClient(new InetSocketAddress("localhost", 11211));
-        
+
         //System.out.println(request.getParameter("user1")+request.getParameter("user2"));
-        
-        List <MsgObject> lista = null;
-       
+        List<MsgObject> lista = null;
+
         try {
-            lista = BancoMsg.getMsgs(request.getParameter("user1"), request.getParameter("user2"));       
+            lista = BancoMsg.getMsgs(request.getSession().getAttribute("user").toString(), request.getParameter("to"));
         } catch (SQLException ex) {
             Logger.getLogger(Mensagem.class.getName()).log(Level.SEVERE, null, ex);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-      
-        //JsonElement json = (new Gson()).toJsonTree(lista);
-        //System.out.println(json);
-        //JsonArray listaJson = json.getAsJsonArray();
-        
-        request.setAttribute("messages", lista);
-        
-        response.setStatus(HttpServletResponse.SC_OK);
-        request.getRequestDispatcher("/WEB-INF/view/mensagens.jsp").forward(request, response);
-        //client.shutdown();
+
+        if (lista == null) {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            response.getWriter().write(request.getParameter("to"));
+        } else {
+            String json = new Gson().toJson(lista);
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write(json);
+        }
     }
 
     /**
@@ -91,21 +88,24 @@ public class Mensagem extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String from = request.getParameter("from");
+        String from = request.getSession().getAttribute("user").toString();
         String to = request.getParameter("to");
         String msg = request.getParameter("msg");
-        
+
         Date date = new Date();
         Timestamp time = new java.sql.Timestamp(date.getTime());
-        	
-        try{
-            BancoMsg.newMsg(from, msg, to, time);
+
+        try {
+            if(BancoMsg.newMsg(from, msg, to, time)){
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write("{\"success\": true}");
+            }else{
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("{\"success\": false}");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Mensagem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        response.sendRedirect("ChatPrincipal?from="+from+"&to="+to);
-        //processRequest(request, response);
     }
 
     /**

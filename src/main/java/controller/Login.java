@@ -56,7 +56,6 @@ public class Login extends HttpServlet {
         }
         
         request.setAttribute("errologin", errologin);
-        System.out.println(request.getRequestURI());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -87,24 +86,25 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String usuario = request.getParameter("user");
-        String senha = request.getParameter("senha");
+        String usuario = request.getParameter("userUser");
+        String senha = request.getParameter("pwUser");
 
         try {
-            boolean log = BancoUser.loginUser(usuario, senha);
-
-            if (log) {
+            if (BancoUser.loginUser(usuario, senha)) {
                 HttpSession sessao = request.getSession();
                 sessao.setAttribute("logado", true);
                 sessao.setAttribute("user", usuario);
 
-                response.sendRedirect("ChatPrincipal");
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write("{\"success\": true}");
+                
             } else {
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                Cookie errologin = new Cookie("errologin", request.getParameter("user"));
+                Cookie errologin = new Cookie("errologin", request.getParameter("userUser"));
                 errologin.setMaxAge(1);
                 response.addCookie(errologin);
-                response.sendRedirect("Login");
+               
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("{\"success\": false}");
             }
 
         } catch (SQLException | ClassNotFoundException ex) {

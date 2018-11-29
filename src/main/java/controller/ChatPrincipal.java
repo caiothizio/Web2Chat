@@ -5,6 +5,7 @@
  */
 package controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,25 +57,9 @@ public class ChatPrincipal extends HttpServlet {
         HttpSession sessao = request.getSession();
 
         sessao.setMaxInactiveInterval(60 * 5);
-        String user = null;
         
-        if(sessao.getAttribute("user") != null){
-            user = sessao.getAttribute("user").toString();
-        }
-        
-        
-        ArrayList<String> contatos = new ArrayList<String>();
-
-        try {
-            
-            contatos = BancoUser.getAllUsers(user);
-            request.setAttribute("user", user);
-            request.setAttribute("contatos", contatos);
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ChatPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        processRequest(request, response);
+       
     }
 
     /**

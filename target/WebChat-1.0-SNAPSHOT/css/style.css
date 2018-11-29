@@ -73,3 +73,18 @@ textarea{
     margin-top: 535px;
     height: 110px;
 }
+
+.pointer{
+    cursor: pointer;
+}
+
+#messages{
+    height: 425px;
+    width: 725px;
+    
+    border-radius: 30px;
+    border: 1.5px solid #878087;
+    
+    overflow-y: auto;
+    overflow-x: auto;
+}

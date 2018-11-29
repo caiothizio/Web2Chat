@@ -5,8 +5,10 @@
  */
 package controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -79,7 +81,19 @@ public class Usuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getSession() == null || request.getSession().getAttribute("logado") == null) {
+            processRequest(request, response);
+        } else {
+            try {
+                ArrayList<String> users = BancoUser.getAllUsers(request.getSession().getAttribute("user").toString());
+                String json = new Gson().toJson(users);
+
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write(json);
+            } catch (SQLException ex) {
+                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
@@ -94,11 +108,12 @@ public class Usuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        
+
         String usuario = request.getParameter("userUser");
         String email = request.getParameter("emailUser");
         String senha = request.getParameter("pwUser");
         String senha_conf = request.getParameter("pwConf");
+
         int flag = 0;
         boolean cadastrou = false;
 
@@ -131,9 +146,7 @@ public class Usuario extends HttpServlet {
             //do nothing
         } else {
             try {
-                boolean cad = BancoUser.newUser(usuario, email, senha);
-
-                if (cad) {
+                if (BancoUser.newUser(usuario, email, senha)) {
                     cadastrou = true;
                 } else {
                     Cookie c = new Cookie("errocadastro", "");
@@ -151,34 +164,36 @@ public class Usuario extends HttpServlet {
                 Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         if (cadastrou) {
             response.setStatus(HttpServletResponse.SC_CREATED);
+            response.getWriter().write("{\"success\": true}");
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"success\": false}");
         }
-       
+
     }
-    
+
     @Override
-    public void doDelete(HttpServletRequest request, HttpServletResponse response){
-        
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+
         String uri = request.getRequestURI();
         String[] parts = uri.split("/");
         String nothing = parts[0];
         String project = parts[1];
         String page = parts[2];
         String user = parts[3];
-        
+
         System.out.println(user);
         try {
-            if(BancoUser.deleteUser(user)){
+            if (BancoUser.deleteUser(user)) {
                 HttpSession sessao = request.getSession();
                 sessao.invalidate();
                 //System.out.println("sucesso");
                 response.setStatus(HttpServletResponse.SC_OK);
                 request.getRequestDispatcher("Login").forward(request, response);
-            }else{
+            } else {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         } catch (SQLException ex) {
@@ -188,7 +203,7 @@ public class Usuario extends HttpServlet {
         } catch (ServletException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**

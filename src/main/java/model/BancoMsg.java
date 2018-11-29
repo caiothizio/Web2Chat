@@ -51,13 +51,13 @@ public class BancoMsg {
   
         String sql = "select * from public.\"mensagem\" where (remetente = ? or remetente = ?) and (destinatario = ? or destinatario = ?) order by data asc";
         Connection con = Conexao.getConnection();
-        PreparedStatement st = con.prepareStatement(sql);
-        st.setString(1, user1);
-        st.setString(2, user2);
-        st.setString(3, user1);
-        st.setString(4, user2);
+        PreparedStatement psmt = con.prepareStatement(sql);
+        psmt.setString(1, user1);
+        psmt.setString(2, user2);
+        psmt.setString(3, user1);
+        psmt.setString(4, user2);
 
-        ResultSet rs = st.executeQuery();
+        ResultSet rs = psmt.executeQuery();
         List<MsgObject> lista = new ArrayList<>();
 
         if (rs.next()) {
@@ -68,15 +68,13 @@ public class BancoMsg {
                 msg.setFrom(rs.getString("remetente"));
                 msg.setMessage(rs.getString("texto"));
                 msg.setTo(rs.getString("destinatario"));
-                
-                //System.out.println(msg.getFrom()+"/"+msg.getTo()+"/"+msg.getMessage()+"/"+msg.getDate());
-
+               
                 lista.add(msg);
             } while (rs.next());
 
             return lista;
         } else {
-            st.close();
+            psmt.close();
             con.close();
 
             return null;

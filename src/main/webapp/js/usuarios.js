@@ -20,19 +20,36 @@ function addUser() {
     var user = document.getElementById("user").value;
     var pw = document.getElementById("senha").value;
     var pw_conf = document.getElementById("senha_conf").value;
-    
-    alert(email+user+pw+pw_conf);
 
     $.ajax({
         url: 'Usuario',
         type: 'POST',
         data: {emailUser: email, userUser: user, pwUser: pw, pwConf: pw_conf},
         statusCode: {
-            201: function(){
-                window.location.replace("Login");
+            201: function (data) {
+                location.replace("/Web2Chat/Login");
             },
-            400: function(){
-                window.location.reload();
+            400: function (data) {
+                location.reload();
+            }
+        }
+    });
+}
+
+function login() {
+    var user = document.getElementById("name").value;
+    var password = document.getElementById("paw").value;
+
+    $.ajax({
+        url: 'Login',
+        type: 'POST',
+        data: {userUser: user, pwUser: password},
+        statusCode: {
+            200: function (data) {
+                location.replace("/Web2Chat/ChatPrincipal")
+            },
+            401: function (data) {
+                location.reload();
             }
         }
     });

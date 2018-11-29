@@ -27,7 +27,6 @@
                             <h1>${msgs["greetings"]}</h1>
                             <p>${msgs["pleaseLogin"]}</p>
                         </div>
-                        <form action="Login" method="POST" class="loginForm">
                             <div class="input-group">
                                 <input type="text" id="name" name = "user" class="form-control mb-2" placeholder=${msgs["username"]} value="${errologin}">
                             </div>
@@ -55,14 +54,17 @@
 
                     <div class="search-box">
                         <div class="input-group">
-                            <input type="submit" id="submit" class="btn btn-primary" value="Login">
+                            <input type="button" id="submit" class="btn btn-primary" value="${msgs["login"]}" onclick="login()">
                         </div>
-                        </form>
+                       
                     </div>
 
                     <a id="new_acc" class ="ml-1" href = "Usuario">${msgs["cad"]}</a>
                 </div>
             </div>
         </div>
+                
+        <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script src="js/usuarios.js" type="text/javascript"></script>
     </body>
 </html>

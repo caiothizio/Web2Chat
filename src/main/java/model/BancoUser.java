@@ -74,21 +74,27 @@ public class BancoUser {
         if (user == null) {
             return null;
         }
-
         ArrayList<String> contatos = new ArrayList<>();
-        String sql = "SELECT usuario FROM public.\"user\" where usuario != '" + user + "'";
-        Statement st;
-        ResultSet rs;
-        try (Connection con = Conexao.getConnection()) {
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-            while (rs.next()) {
+        String sql = "SELECT usuario FROM public.\"user\" where usuario != ?";
+        Connection con = Conexao.getConnection();
+        PreparedStatement psmt = con.prepareStatement(sql);
+        
+        psmt.setString(1, user);
+        
+        ResultSet rs = psmt.executeQuery();
+        
+        if(rs.next()){
+            do{
                 contatos.add(rs.getString("usuario"));
-            }
+            }while(rs.next());
+        }else{
+            con.close();
+            psmt.close();
+            
+            return null;
         }
-        st.close();
-        rs.close();
-
+        con.close();
+        psmt.close();
         return contatos;
     }
     

@@ -22,49 +22,43 @@
                 <div class="col-sm-3 mt-5">
                     <h3>${msgs["hello1"]} <span class="negrito">${user}</span>!</h3> 
                     <a href="Logout">${msgs["logout"]}</a>
-                        
-                    
+
+
                     <p class="mt-3">${msgs["contact"]}</p>
-                    <div class="list-group contatos">
-                        
-                        <c:forEach items="${contatos}" var="element">
-                            <a href="ChatPrincipal?from=${user}&to=<c:out value="${element}"/>" class="list-group-item list-group-item-action"><c:out value="${element}"/></a>
-                        </c:forEach>
-                       
-                    </div>
                     
-                    <input type="button" class="btn btn-primary mt-4" value="Apagar Minha Conta" onclick="deleteUser('${user}')">
+                    <div class="list-group contatos" id = "contatos">
+
+                    </div>
+
+                    <button type="button" class="btn btn-primary mt-4" onclick="deleteUser('${user}')">${msgs["erase"]}</button>
                 </div>
                 <div class="col-sm-8 mt-5">
-                    
+
                     <c:choose>
                         <c:when test="${empty param.to}">
-                            <h3>${msgs["selectcont"]}</h3>
+                            <h3 id="chatwith">${msgs["selectcont"]}</h3>
                         </c:when>
                         <c:otherwise>
                             <h3>${msgs["chatw"]} <c:out value="${param.to}"/>
-                        </c:otherwise>
-                    </c:choose>
-                    
-                       
-                    <iframe src = "Mensagem?user1=${param.from}&user2=${param.to}" height = "425" width = "725"></iframe>
-                    
-                 
-                    <form action = "Mensagem" method = "POST">
-                        <textarea class="mt-3 form-control" name="msg" rows="5" placeholder="${msgs["wriw"]}"></textarea>
-                        
-                </div>
-                        
-                <div class="col-sm-1">
-                    <input type='hidden' name='from' value="${param.from}">
-                    <input type='hidden' name='to' value="${param.to}">
-                    <input type='submit' class="btn btn-primary botaoenviar" value="${msgs["send"]}">
-                    </form>
-                </div>
-            </div>
-        </div>
-                    
-        <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
-        <script src="js/usuarios.js" type="text/javascript"></script>
-    </body>
-</html>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <div id="messages">
+                            
+                        </div>
+
+                            <textarea class="mt-3 form-control" id="msg-text" name="msg" rows="5" placeholder="${msgs["wriw"]}"></textarea>
+
+                            </div>
+
+                            <div class="col-sm-1" id="enviarMsg">
+                                
+                            </div>
+                            </div>
+                            </div>
+
+                            <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+                            <script src="js/mensagens.js" type="text/javascript"></script>
+                            <script src="js/chatprincipal.js" type="text/javascript"></script>
+                            </body>
+                            </html>

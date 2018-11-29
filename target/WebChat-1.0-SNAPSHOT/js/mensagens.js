@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+/*
 function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -40,6 +41,30 @@ function getMessages(user1, user2){
             },
             400: function(){
                 
+            }
+        }
+    });
+}
+*/
+function newMessage(date, from, message){
+    return '<p class="ml-2 mt-2">['+ date +']<span class="font-weight-bold"> '+ from +' diz:</span> '+ message +'</p>';
+}
+
+function escreverMsg(to){
+    var msg = $('textarea#msg-text').val();
+    $('textarea#msg-text').val('');
+    
+    var para = to;
+    $.ajax({
+        url: 'Mensagem',
+        type: 'POST',
+        data: {to: to, msg: msg},
+        statusCode:{
+            200: function(data){
+                abrirChat(para);
+            },
+            400: function(data){
+                document.querySelector("#messages").innerHTML += '<p class="text-danger font-weight-bold">Houve um erro ao enviar a mensagem! Tente novamente depois.</p>'
             }
         }
     });
