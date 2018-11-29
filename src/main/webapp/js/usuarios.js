@@ -27,7 +27,7 @@ function addUser() {
         data: {emailUser: email, userUser: user, pwUser: pw, pwConf: pw_conf},
         statusCode: {
             201: function (data) {
-                location.replace("/Web2Chat/Login");
+                location.replace("/Login");
             },
             400: function (data) {
                 location.reload();
@@ -46,7 +46,7 @@ function login() {
         data: {userUser: user, pwUser: password},
         statusCode: {
             200: function (data) {
-                location.replace("/Web2Chat/ChatPrincipal")
+                location.replace("/ChatPrincipal")
             },
             401: function (data) {
                 location.reload();
