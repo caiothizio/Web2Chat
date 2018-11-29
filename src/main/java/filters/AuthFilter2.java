@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author caiot
  */
-@WebFilter(urlPatterns = {"/ChatPrincipal", "/Mensagem"})
-public class AuthFilter implements Filter {
+@WebFilter(urlPatterns = {"/Login"})
+public class AuthFilter2 implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -33,9 +33,9 @@ public class AuthFilter implements Filter {
         HttpSession session;
         session = ((HttpServletRequest) (request)).getSession();
 
-        if (session.getAttribute("logado") == null || session.getAttribute("logado").equals(false) || session == null) {
+        if (session.getAttribute("logado") != null && session.getAttribute("logado").equals(true)) {
             HttpServletResponse res = (HttpServletResponse) response;
-            res.sendRedirect("Login");
+            res.sendRedirect("ChatPrincipal");
             return;
         }
         
