@@ -71,7 +71,10 @@ public class BancoMsg {
                
                 lista.add(msg);
             } while (rs.next());
-
+            
+            psmt.close();
+            con.close();
+            
             return lista;
         } else {
             psmt.close();

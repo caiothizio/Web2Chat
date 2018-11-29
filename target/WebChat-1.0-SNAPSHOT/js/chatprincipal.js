@@ -46,6 +46,9 @@ function abrirChat(data){
             204: function(data){
                 document.querySelector("#messages").innerHTML = '<p class = "mt-4" style="text-align:center"> Você não possui mensagens com <span class="font-weight-bold">'+ to +'</span>. </p>';
             }
+        },
+        error: function(xhr){
+            alert(JSON.stringify(xhr));
         }
     });
 }
