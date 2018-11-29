@@ -89,7 +89,7 @@ public class Login extends HttpServlet {
         String usuario = request.getParameter("userUser");
         String senha = request.getParameter("pwUser");
 
-        if (usuario.isEmpty() || senha.isEmpty()) {
+        if (usuario.equals("") || senha.equals("")) {
             Cookie loginvazio = new Cookie("loginvazio", request.getParameter("userUser"));
             loginvazio.setMaxAge(1);
             response.addCookie(loginvazio);

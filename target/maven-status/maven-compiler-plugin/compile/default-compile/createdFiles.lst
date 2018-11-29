@@ -4,6 +4,7 @@ filters\AuthFilter.class
 controller\Logout.class
 filters\I18nFilter.class
 controller\Usuario.class
+filters\AuthFilter2.class
 controller\Mensagem.class
 model\UserObject.class
 controller\Login.class

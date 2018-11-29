@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+var chatWith;
+
 $(document).ready(function(){
         $.ajax({
         url: 'Usuario',
@@ -22,8 +24,20 @@ $(document).ready(function(){
     });
 })
 
+var reloadChat = setInterval(function(){
+    if(chatWith === undefined)
+        return;
+    
+    abrirChat(chatWith);
+}, 5000);
+
 function abrirChat(data){
     var to = data;
+    chatWith = data;
+    console.log(chatWith);
+    if(to === undefined){
+        return;
+    }
     document.querySelector("#chatwith").innerHTML = 'Chat com ' + to + ':'
     document.querySelector("#enviarMsg").innerHTML = '<button class="btn btn-primary botaoenviar" onclick="escreverMsg(\''+to+'\')">Enviar</button>';
     $.ajax({
@@ -40,7 +54,11 @@ function abrirChat(data){
                     var from = messages[i].from;
                     var msg = messages[i].message;
                    
-                    document.querySelector("#messages").innerHTML += newMessage(date, from, msg);
+                    if(from === to){
+                        document.querySelector("#messages").innerHTML += newMessageFrom(date, from, msg);
+                    }else{
+                        document.querySelector("#messages").innerHTML += newMessageTo(date, from, msg);
+                    }
                 }
             },
             204: function(data){

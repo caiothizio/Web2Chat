@@ -46,12 +46,21 @@ function getMessages(user1, user2){
     });
 }
 */
-function newMessage(date, from, message){
-    return '<p class="ml-2 mt-2">['+ date +']<span class="font-weight-bold"> '+ from +' diz:</span> '+ message +'</p>';
+function newMessageFrom(date, from, message){
+    return '<p class="ml-2 mt-2 text-left"><span class="msg-from">['+ date +']<span class="font-weight-bold"> '+ from +' diz:</span> '+ message +'</span></p>';
+}
+
+function newMessageTo(date, from, message){
+    return '<p class="mr-2 mt-2 text-right"><span class="msg-to">['+ date +']<span class="font-weight-bold"> '+ from +' diz:</span> '+ message +'</span></p>';
 }
 
 function escreverMsg(to){
     var msg = $('textarea#msg-text').val();
+    
+    if(msg === ""){
+        return;
+    }
+    
     $('textarea#msg-text').val('');
     
     var para = to;
