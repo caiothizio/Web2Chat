@@ -40,15 +40,14 @@
                             <c:when test="${not empty errologin}">
                                 <p>${msgs["errologin"]}</p>
                             </c:when>
-                        </c:choose>
-                                
-                        <c:choose>
+                            <c:when test="${not empty loginvazio}">
+                                <p>${msgs["loginvazio"]}</p>
+                            </c:when>
                             <c:when test="${not empty usuarioapagado}">
                                 <p>Usuario deletado com sucesso.</p>
                             </c:when>
                         </c:choose>
-                        
-
+                       
                     </div>
 
 

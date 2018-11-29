@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -37,7 +37,7 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+
         Cookie[] cookie = request.getCookies();
 
         String errologin = null;
@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
                 }
             }
         }
-        
+
         request.setAttribute("errologin", errologin);
     }
 
@@ -89,28 +89,37 @@ public class Login extends HttpServlet {
         String usuario = request.getParameter("userUser");
         String senha = request.getParameter("pwUser");
 
-        try {
-            if (BancoUser.loginUser(usuario, senha)) {
-                HttpSession sessao = request.getSession();
-                sessao.setAttribute("logado", true);
-                sessao.setAttribute("user", usuario);
+        if (usuario.isEmpty() || senha.isEmpty()) {
+            Cookie loginvazio = new Cookie("loginvazio", request.getParameter("userUser"));
+            loginvazio.setMaxAge(1);
+            response.addCookie(loginvazio);
 
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().write("{\"success\": true}");
-                
-            } else {
-                Cookie errologin = new Cookie("errologin", request.getParameter("userUser"));
-                errologin.setMaxAge(1);
-                response.addCookie(errologin);
-               
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("{\"success\": false}");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("{\"success\": false}");
+        } else {
+            try {
+                if (BancoUser.loginUser(usuario, senha)) {
+                    HttpSession sessao = request.getSession();
+                    sessao.setAttribute("logado", true);
+                    sessao.setAttribute("user", usuario);
+
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().write("{\"success\": true}");
+
+                } else {
+                    Cookie errologin = new Cookie("errologin", request.getParameter("userUser"));
+                    errologin.setMaxAge(1);
+                    response.addCookie(errologin);
+
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("{\"success\": false}");
+                }
+
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
